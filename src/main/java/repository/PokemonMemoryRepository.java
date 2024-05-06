@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonMemoryRepository implements CRUDRepository<Pokemon> {
-    private List<Pokemon> pokemonList;
+    private List<Pokemon> pokemons;
 
     public PokemonMemoryRepository() {
-        this.pokemonList = generateDefaultPokemonList();
+        this.pokemons = generateDefaultPokemonList();
     }
 
     @Override
     public List<Pokemon> getAll() {
-        return pokemonList;
+        return pokemons;
     }
 
     @Override
     public boolean add(Pokemon pokemon) throws Exception {
-        if (pokemonList.contains(pokemon)) {
-            pokemonList.add(pokemon);
+        if (!pokemons.contains(pokemon)) {
+            pokemons.add(pokemon);
         } else throw new Exception(String.format("El pokémon %s ya existe", pokemon.getName()));
 
         return true;
@@ -29,10 +29,10 @@ public class PokemonMemoryRepository implements CRUDRepository<Pokemon> {
 
     @Override
     public boolean update(Pokemon pokemon) throws Exception {
-        int pokemonIndex = pokemonList.indexOf(pokemon);
+        int pokemonIndex = pokemons.indexOf(pokemon);
 
         if (pokemonIndex != -1) {
-            pokemonList.set(pokemonIndex, pokemon);
+            pokemons.set(pokemonIndex, pokemon);
         } else throw new Exception(String.format("El pokémon %s no existe", pokemon.getName()));
 
         return true;
@@ -40,7 +40,7 @@ public class PokemonMemoryRepository implements CRUDRepository<Pokemon> {
 
     @Override
     public boolean delete(Pokemon pokemon) {
-        return pokemonList.remove(pokemon);
+        return pokemons.remove(pokemon);
     }
 
     private List<Pokemon> generateDefaultPokemonList() {
