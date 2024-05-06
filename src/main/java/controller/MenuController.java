@@ -9,15 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ruben.proyecto_pokemon.PokemonApp;
 import service.AlertService;
 
 import java.io.IOException;
 
 public class MenuController {
-
     @FXML
     private Button btnBattle;
-
     @FXML
     private Button btnManagePokemons;
 
@@ -28,12 +27,12 @@ public class MenuController {
 
     @FXML
     void btnManagePokemons_clicked(MouseEvent event) {
-
+        showStage("manage-pokemons-controller.fxml", "Gestión de pokémons");
     }
 
     private void showStage(String viewFileName, String title) {
         try {
-            FXMLLoader loader = FXMLLoader.load(getClass().getResource(viewFileName));
+            FXMLLoader loader = new FXMLLoader(PokemonApp.class.getResource(viewFileName));
 
             Parent root = loader.load();
             Scene scene = new Scene(root);
