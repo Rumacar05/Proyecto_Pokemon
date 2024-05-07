@@ -39,6 +39,10 @@ public class Pokemon {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public int getBaseStrength() {
         return baseStrength;
     }
