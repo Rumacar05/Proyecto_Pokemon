@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="152.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="14.0" layoutY="17.0" text="Código" />
+      <TextField fx:id="txtCode" layoutX="62.0" layoutY="14.0" />
+      <Label layoutX="14.0" layoutY="51.0" text="Nombre" />
+      <TextField fx:id="txtName" layoutX="62.0" layoutY="47.0" />
+      <Label layoutX="14.0" layoutY="83.0" text="Tipo" />
+      <ChoiceBox fx:id="chbType" layoutX="62.0" layoutY="81.0" prefWidth="150.0" />
+      <Label layoutX="14.0" layoutY="119.0" text="Nivel" />
+      <TextField fx:id="txtLevel" layoutX="62.0" layoutY="115.0" />
+      <Label layoutX="243.0" layoutY="17.0" text="Defensa base" />
+      <TextField fx:id="txtBaseDefense" layoutX="320.0" layoutY="14.0" />
+      <Label layoutX="243.0" layoutY="51.0" text="Fuerza base" />
+      <TextField fx:id="txtBaseStrength" layoutX="320.0" layoutY="47.0" />
+      <Label layoutX="243.0" layoutY="83.0" text="Vida base" />
+      <TextField fx:id="txtBaseLife" layoutX="320.0" layoutY="79.0" />
+      <Button fx:id="btnAddEdit" layoutX="243.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#btnAddUpdate_clicked" prefHeight="25.0" prefWidth="227.0" text="Agregar/Modificar Pokémon" textFill="#3232ee" />
+   </children>
+</AnchorPane>
