@@ -74,12 +74,14 @@ public class ManagePokemonsController {
     }
 
     @FXML
-    void btnAddNewPokemon_clicked(MouseEvent event) {
+    void btnAddNewPokemon_clicked(MouseEvent event) throws Exception {
         AddPokemonController controller = new AddPokemonController();
 
         showStage(ADD_UPDATE_POKEMON_FILE, controller, "Nuevo Pokémon");
 
-        tblPokemons.refresh();
+        if (controller.getPokemonCreated() != null) {
+            tblPokemons.setItems(FXCollections.observableList(pokemonRepository.getAll()));
+        }
     }
 
     @FXML

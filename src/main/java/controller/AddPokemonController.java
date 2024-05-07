@@ -61,11 +61,17 @@ public class AddPokemonController {
         }
     }
 
-    private Pokemon instancePokemonFromData() {
+    private Pokemon instancePokemonFromData() throws Exception {
         Pokemon pokemon = null;
+        int code;
+        try {
+            code = Integer.parseInt(txtCode.getText());
+        } catch (NumberFormatException ex) {
+            code = pokemonRepository.getAll().stream().mapToInt(Pokemon::getCode).max().orElse(0) + 1;
+        }
 
         try {
-            pokemon = new Pokemon(Integer.parseInt(txtCode.getText()), txtName.getText(), chbType.getValue(),
+            pokemon = new Pokemon(code, txtName.getText(), chbType.getValue(),
                     Integer.parseInt(txtLevel.getText()), Integer.parseInt(txtBaseStrength.getText()),
                     Integer.parseInt(txtBaseDefense.getText()), Integer.parseInt(txtBaseLife.getText()));
         } catch (NumberFormatException ex) {
