@@ -6,17 +6,24 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
+import ruben.proyecto_pokemon.PokemonApp;
 import service.AlertService;
 
+import java.io.IOException;
+
 public class ManagePokemonsController {
+    private final static String ADD_UPDATE_POKEMON_FILE = "add-update-pokemon-view.fxml";
+
     @FXML
     private Button btnAddNewPokemon;
     @FXML
@@ -63,12 +70,70 @@ public class ManagePokemonsController {
     }
 
     private void loadData() throws Exception {
-        ObservableList<Pokemon> pokemonList = FXCollections.observableList(pokemonRepository.getAll());
-        tblPokemons.setItems(FXCollections.observableList(pokemonList));
+        tblPokemons.setItems(FXCollections.observableList(pokemonRepository.getAll()));
     }
 
     @FXML
     void btnAddNewPokemon_clicked(MouseEvent event) {
+        AddPokemonController controller = new AddPokemonController();
 
+        showStage(ADD_UPDATE_POKEMON_FILE, controller, "Nuevo Pokémon");
+
+        tblPokemons.refresh();
+    }
+
+    @FXML
+    void tblPokemons_clicked(MouseEvent event) {
+        if (thereArePokemonSelected()) {
+            Pokemon pokemon = tblPokemons.getSelectionModel().getSelectedItem();
+            showStage(ADD_UPDATE_POKEMON_FILE, new UpdatePokemonController(pokemon), "Nuevo Pokémon");
+
+            tblPokemons.refresh();
+        }
+    }
+
+    @FXML
+    void tblPokemons_drag(MouseEvent event) {
+        try {
+            if (thereArePokemonSelected()) {
+                Pokemon pokemon = tblPokemons.getSelectionModel().getSelectedItem();
+                ButtonType response = AlertService.showAlert(Alert.AlertType.CONFIRMATION, "Eliminar pokémon",
+                        String.format("¿Quieres borrar el pokémon %s?", pokemon.getName()));
+
+                if (response == ButtonType.OK) {
+                    pokemonRepository.delete(pokemon);
+                    tblPokemons.getItems().remove(pokemon);
+                    AlertService.showAlert(Alert.AlertType.INFORMATION, "Pokémon eliminado", "Se ha eliminado el pokémon " + pokemon.getName());
+                }
+
+                tblPokemons.refresh();
+            }
+        } catch (Exception ex) {
+            AlertService.showAlert(Alert.AlertType.ERROR, "Se ha producido un error eliminando el pokémon", ex.getMessage());
+        }
+    }
+
+    private boolean thereArePokemonSelected() {
+        return tblPokemons.getSelectionModel().getSelectedItem() != null;
+    }
+
+    private void showStage(String viewFileName, Object controller, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(PokemonApp.class.getResource(viewFileName));
+            loader.setController(controller);
+
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setTitle(title);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            AlertService.showAlert(Alert.AlertType.ERROR, "Se ha producido un error cargando la ventana", ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 }

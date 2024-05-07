@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
 import service.AlertService;
@@ -81,6 +82,8 @@ public class AddPokemonController {
             if (pokemonRepository.add(pokemon)) {
                 AlertService.showAlert(Alert.AlertType.INFORMATION, "Nuevo pokémon agregado", "Se ha agregado el pokémon "+ pokemon.getName());
                 this.pokemonCreated = pokemon;
+
+                ((Stage) btnAddEdit.getScene().getWindow()).close();
             } else {
                 AlertService.showAlert(Alert.AlertType.ERROR, "No se ha podido agregar el pokémon", "Ha sido imposible agregar el pokémon "+ pokemon.getName());
             }

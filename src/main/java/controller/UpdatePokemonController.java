@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
 import service.AlertService;
@@ -87,6 +88,8 @@ public class UpdatePokemonController {
         if (validation.isPokemonValid()) {
             if (pokemonRepository.update(pokemon)) {
                 AlertService.showAlert(Alert.AlertType.INFORMATION, "Se ha actualizado el pokémon", "Se han modificado los datos del pokémon "+ pokemon.getName());
+
+                ((Stage) btnAddEdit.getScene().getWindow()).close();
             } else {
                 AlertService.showAlert(Alert.AlertType.ERROR, "No se ha podido modificar el pokémon", "Ha sido imposible modificar el pokémon "+ pokemon.getName());
             }
