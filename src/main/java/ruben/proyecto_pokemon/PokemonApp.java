@@ -13,6 +13,7 @@ public class PokemonApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            Configuration.start();
             FXMLLoader loader = new FXMLLoader(PokemonApp.class.getResource("menu-view.fxml"));
 
             Parent root = loader.load();

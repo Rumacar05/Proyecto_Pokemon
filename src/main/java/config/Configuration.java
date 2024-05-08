@@ -4,13 +4,38 @@ import model.Pokemon;
 import repository.CRUDRepository;
 import repository.PokemonMemoryRepository;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 public class Configuration {
-    public static CRUDRepository<Pokemon> POKEMON_REPOSITORY = new PokemonMemoryRepository();
-    public static final int MIN_DAMAGE = 1;
-    public static final int MIN_ATTACK = 0;
-    public static final int MAX_ATTACK = 3;
-    public static final int MIN_LEVEL = 1;
-    public static final int MAX_LEVEL = 100;
-    public static final int MIN_BASE_PARAMETER = 1;
-    public static final int MAX_BASE_PARAMETER = 15;
+    private static final String FILE_PROPERTIES_PATH = "/config/config.properties";
+    private static Properties properties;
+
+    public static CRUDRepository<Pokemon> POKEMON_REPOSITORY;
+    public static int MIN_DAMAGE;
+    public static int MIN_ATTACK;
+    public static int MAX_ATTACK;
+    public static int MIN_LEVEL;
+    public static int MAX_LEVEL;
+    public static int MIN_BASE_PARAMETER;
+    public static int MAX_BASE_PARAMETER;
+
+    public static void start() throws Exception {
+        if (properties == null) {
+            properties = new Properties();
+            properties.load(new FileInputStream(Configuration.class.getResource(FILE_PROPERTIES_PATH).toURI().getPath()));
+            setProperties();
+        }
+    }
+
+    private static void setProperties() {
+        POKEMON_REPOSITORY = new PokemonMemoryRepository();
+        MIN_DAMAGE = Integer.parseInt(properties.getProperty("min_damage", "1"));
+        MIN_ATTACK = Integer.parseInt(properties.getProperty("min_attack", "0"));
+        MAX_ATTACK = Integer.parseInt(properties.getProperty("max_attack", "3"));
+        MIN_LEVEL = Integer.parseInt(properties.getProperty("min_level", "1"));
+        MAX_LEVEL = Integer.parseInt(properties.getProperty("max_level", "100"));
+        MIN_BASE_PARAMETER = Integer.parseInt(properties.getProperty("min_base_parameter", "1"));
+        MAX_BASE_PARAMETER = Integer.parseInt(properties.getProperty("max_base_parameter", "15"));
+    }
 }
