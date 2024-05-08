@@ -4,7 +4,6 @@ import config.Configuration;
 import enums.PokemonType;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -75,7 +74,7 @@ public class ManagePokemonsController {
     }
 
     @FXML
-    void btnAddNewPokemon_clicked(MouseEvent event) throws Exception {
+    void btnAddNewPokemon_clicked() throws Exception {
         AddPokemonController controller = new AddPokemonController();
 
         showStage(ADD_UPDATE_POKEMON_FILE, controller, "Nuevo Pokémon");
@@ -89,7 +88,7 @@ public class ManagePokemonsController {
     void tblPokemons_clicked(MouseEvent event) {
         if (thereArePokemonSelected(event)) {
             Pokemon pokemon = tblPokemons.getSelectionModel().getSelectedItem();
-            showStage(ADD_UPDATE_POKEMON_FILE, new UpdatePokemonController(pokemon), "Nuevo Pokémon");
+            showStage(ADD_UPDATE_POKEMON_FILE, new UpdatePokemonController(pokemon), "Modificar Pokémon");
 
             tblPokemons.refresh();
         }

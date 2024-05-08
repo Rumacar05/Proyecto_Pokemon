@@ -4,21 +4,18 @@ import config.Configuration;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import model.Pokemon;
 import repository.CRUDRepository;
 import service.AlertService;
 import service.BattleService;
 import service.PokemonService;
 
-import java.util.List;
 
 public class BattleController {
     @FXML
@@ -62,7 +59,7 @@ public class BattleController {
     }
 
     @FXML
-    void btnStartBattle_clicked(MouseEvent event) {
+    void btnStartBattle_clicked() {
         if (chbPokemon1.getValue() != null && chbPokemon2.getValue() != null) {
             Pokemon pokemon1 = pokemonService.getPokemonByName(chbPokemon1.getValue()).clone();
             Pokemon pokemon2 = pokemonService.getPokemonByName(chbPokemon2.getValue()).clone();
@@ -77,15 +74,15 @@ public class BattleController {
                 }
             }
 
-            if (pokemon1.getLife() == 0) {
-                sb.append(String.format("¡%s gana la batalla!", pokemon1.getName()));
-            } else {
-                sb.append(String.format("¡%s gana la batalla!", pokemon2.getName()));
-            }
+            sb.append(String.format("¡%s gana la batalla!", getWinner(pokemon1, pokemon2).getName()));
 
             txtBattle.setText(sb.toString());
         } else {
             AlertService.showAlert(Alert.AlertType.INFORMATION, "La batalla no se puede realizar", "No hay dos pokemons seleccionados");
         }
+    }
+
+    private Pokemon getWinner(Pokemon pokemon1, Pokemon pokemon2) {
+        return pokemon1.getLife() == 0 ? pokemon2 : pokemon1;
     }
 }

@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
@@ -46,6 +45,7 @@ public class AddPokemonController {
 
     @FXML
     void initialize() {
+        btnAddEdit.setText("Agregar Pokémon");
         pokemonRepository = Configuration.POKEMON_REPOSITORY;
         chbType.setItems(FXCollections.observableArrayList(Arrays.stream(PokemonType.values())
                                                         .sorted(Comparator.comparing(Enum::name))
@@ -53,7 +53,7 @@ public class AddPokemonController {
     }
 
     @FXML
-    void btnAddUpdate_clicked(MouseEvent event) {
+    void btnAddUpdate_clicked() {
         try {
             Pokemon pokemon = instancePokemonFromData();
             if (pokemon != null) savePokemon(pokemon);

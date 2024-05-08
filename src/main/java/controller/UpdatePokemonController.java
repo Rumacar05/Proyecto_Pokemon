@@ -7,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
@@ -42,6 +41,7 @@ public class UpdatePokemonController {
     @FXML
     void initialize() {
         pokemonRepository = Configuration.POKEMON_REPOSITORY;
+        btnAddEdit.setText("Modificar Pokémon");
 
         txtCode.setDisable(true);
         txtCode.setText(String.valueOf(pokemon.getCode()));
@@ -65,7 +65,7 @@ public class UpdatePokemonController {
     }
 
     @FXML
-    void btnAddUpdate_clicked(MouseEvent event) {
+    void btnAddUpdate_clicked() {
         try {
             updatePokemonValues();
             savePokemonChanges();

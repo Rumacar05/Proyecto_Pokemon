@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ruben.proyecto_pokemon.PokemonApp;
@@ -21,12 +20,12 @@ public class MenuController {
     private Button btnManagePokemons;
 
     @FXML
-    void btnBattle_clicked(MouseEvent event) {
+    void btnBattle_clicked() {
         showStage("battle-view.fxml", "Batalla Pokémon");
     }
 
     @FXML
-    void btnManagePokemons_clicked(MouseEvent event) {
+    void btnManagePokemons_clicked() {
         showStage("manage-pokemons-controller.fxml", "Gestión de pokémons");
     }
 
