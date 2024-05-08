@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Pokemon;
 import repository.CRUDRepository;
 import service.AlertService;
+import service.PokemonService;
 import service.PokemonValidateService;
 
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class AddPokemonController {
         try {
             code = Integer.parseInt(txtCode.getText());
         } catch (NumberFormatException ex) {
-            code = pokemonRepository.getAll().stream().mapToInt(Pokemon::getCode).max().orElse(0) + 1;
+            code = new PokemonService(pokemonRepository.getAll()).getMaxCode() + 1;
         }
 
         try {

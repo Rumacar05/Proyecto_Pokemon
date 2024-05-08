@@ -9,8 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import service.AlertService;
 
-import java.io.IOException;
-
 public class PokemonApp extends Application {
     @Override
     public void start(Stage stage) {

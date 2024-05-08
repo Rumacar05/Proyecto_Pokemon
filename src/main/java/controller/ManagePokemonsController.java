@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -70,7 +71,7 @@ public class ManagePokemonsController {
     }
 
     private void loadData() throws Exception {
-        tblPokemons.setItems(FXCollections.observableList(pokemonRepository.getAll()));
+        tblPokemons.setItems(FXCollections.observableArrayList(pokemonRepository.getAll()));
     }
 
     @FXML
@@ -80,13 +81,13 @@ public class ManagePokemonsController {
         showStage(ADD_UPDATE_POKEMON_FILE, controller, "Nuevo Pokémon");
 
         if (controller.getPokemonCreated() != null) {
-            tblPokemons.setItems(FXCollections.observableList(pokemonRepository.getAll()));
+            tblPokemons.getItems().add(controller.getPokemonCreated());
         }
     }
 
     @FXML
     void tblPokemons_clicked(MouseEvent event) {
-        if (thereArePokemonSelected()) {
+        if (thereArePokemonSelected(event)) {
             Pokemon pokemon = tblPokemons.getSelectionModel().getSelectedItem();
             showStage(ADD_UPDATE_POKEMON_FILE, new UpdatePokemonController(pokemon), "Nuevo Pokémon");
 
@@ -97,7 +98,7 @@ public class ManagePokemonsController {
     @FXML
     void tblPokemons_drag(MouseEvent event) {
         try {
-            if (thereArePokemonSelected()) {
+            if (thereArePokemonSelected(event)) {
                 Pokemon pokemon = tblPokemons.getSelectionModel().getSelectedItem();
                 ButtonType response = AlertService.showAlert(Alert.AlertType.CONFIRMATION, "Eliminar pokémon",
                         String.format("¿Quieres borrar el pokémon %s?", pokemon.getName()));
@@ -115,8 +116,8 @@ public class ManagePokemonsController {
         }
     }
 
-    private boolean thereArePokemonSelected() {
-        return tblPokemons.getSelectionModel().getSelectedItem() != null;
+    private boolean thereArePokemonSelected(MouseEvent event) {
+        return !(event.getTarget() instanceof TableColumnHeader) && tblPokemons.getSelectionModel().getSelectedItem() != null;
     }
 
     private void showStage(String viewFileName, Object controller, String title) {
