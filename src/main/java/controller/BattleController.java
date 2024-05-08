@@ -16,7 +16,6 @@ import service.AlertService;
 import service.BattleService;
 import service.PokemonService;
 
-
 public class BattleController {
     @FXML
     private Button btnStartBattle;
