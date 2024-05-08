@@ -4,7 +4,7 @@ import enums.PokemonType;
 
 import java.util.Objects;
 
-public class Pokemon {
+public class Pokemon implements Cloneable {
     private int code;
     private String name;
     private PokemonType type;
@@ -12,6 +12,7 @@ public class Pokemon {
     private int baseStrength;
     private int baseDefense;
     private int baseLife;
+    private int life;
 
     public Pokemon(int code, String name, PokemonType type, int level, int baseStrength, int baseDefense, int baseLife) {
         this.code = code;
@@ -21,6 +22,7 @@ public class Pokemon {
         this.baseStrength = baseStrength;
         this.baseDefense = baseDefense;
         this.baseLife = baseLife;
+        resetLife();
     }
 
     public int getCode() {
@@ -64,7 +66,15 @@ public class Pokemon {
     }
 
     public int getLife() {
-        return baseLife * level;
+        return life;
+    }
+
+    public void resetLife() {
+        life = baseLife * level;
+    }
+
+    public void receiveAttack(int damage) {
+        this.life = Math.max(0, this.life - damage);
     }
 
     @Override
@@ -94,5 +104,14 @@ public class Pokemon {
         sb.append('}');
 
         return sb.toString();
+    }
+
+    @Override
+    public Pokemon clone() {
+        try {
+            return (Pokemon) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

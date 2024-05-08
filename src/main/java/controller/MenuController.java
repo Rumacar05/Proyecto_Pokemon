@@ -22,7 +22,7 @@ public class MenuController {
 
     @FXML
     void btnBattle_clicked(MouseEvent event) {
-
+        showStage("battle-view.fxml", "Batalla Pokémon");
     }
 
     @FXML
