@@ -2,8 +2,11 @@ package config;
 
 import model.Pokemon;
 import repository.CRUDRepository;
+import repository.PokemonJsonRepository;
 import repository.PokemonMemoryRepository;
+import ruben.proyecto_pokemon.PokemonApp;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
@@ -19,6 +22,7 @@ public class Configuration {
     public static int MAX_LEVEL;
     public static int MIN_BASE_PARAMETER;
     public static int MAX_BASE_PARAMETER;
+    public static String POKEMONS_JSON_FILE_PATH;
 
     public static void start() throws Exception {
         if (properties == null) {
@@ -28,8 +32,8 @@ public class Configuration {
         }
     }
 
-    private static void setProperties() {
-        POKEMON_REPOSITORY = new PokemonMemoryRepository();
+    private static void setProperties() throws Exception {
+        POKEMON_REPOSITORY = setRepository();
         MIN_DAMAGE = Integer.parseInt(properties.getProperty("min_damage", "1"));
         MIN_ATTACK = Integer.parseInt(properties.getProperty("min_attack", "0"));
         MAX_ATTACK = Integer.parseInt(properties.getProperty("max_attack", "3"));
@@ -37,5 +41,19 @@ public class Configuration {
         MAX_LEVEL = Integer.parseInt(properties.getProperty("max_level", "100"));
         MIN_BASE_PARAMETER = Integer.parseInt(properties.getProperty("min_base_parameter", "1"));
         MAX_BASE_PARAMETER = Integer.parseInt(properties.getProperty("max_base_parameter", "15"));
+        POKEMONS_JSON_FILE_PATH = "src/main/resources/pokemons.json";
+    }
+
+    private static CRUDRepository<Pokemon> setRepository() {
+        CRUDRepository<Pokemon> repository;
+        String repositoryType = properties.getProperty("repository", "memory");
+
+        switch (repositoryType) {
+            case "json" -> repository = new PokemonJsonRepository();
+
+            default -> repository = new PokemonMemoryRepository();
+        }
+
+        return repository;
     }
 }
