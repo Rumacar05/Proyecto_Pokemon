@@ -46,10 +46,10 @@ public class PokemonMemoryRepository implements CRUDRepository<Pokemon> {
     private List<Pokemon> generateDefaultPokemonList() {
         List<Pokemon> pokemonList = new ArrayList<>();
 
-        pokemonList.add(new Pokemon(1, "Pikachu", PokemonType.ELECTRICO, 2, 5, 5, 15));
-        pokemonList.add(new Pokemon(2, "Chikorita", PokemonType.PLANTA, 1, 3, 7, 15));
-        pokemonList.add(new Pokemon(3, "Totodile", PokemonType.AGUA, 1, 2, 4, 15));
-        pokemonList.add(new Pokemon(4, "Charmandar", PokemonType.FUEGO, 2, 5, 5, 15));
+        pokemonList.add(new Pokemon(1, "Pikachu", PokemonType.ELECTRIC, 2, 5, 5, 15));
+        pokemonList.add(new Pokemon(2, "Chikorita", PokemonType.PLANT, 1, 3, 7, 15));
+        pokemonList.add(new Pokemon(3, "Totodile", PokemonType.WATER, 1, 2, 4, 15));
+        pokemonList.add(new Pokemon(4, "Charmandar", PokemonType.FIRE, 2, 5, 5, 15));
 
         return pokemonList;
     }
