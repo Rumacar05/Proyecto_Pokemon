@@ -4,6 +4,7 @@ import model.Pokemon;
 import repository.CRUDRepository;
 import repository.PokemonJsonRepository;
 import repository.PokemonMemoryRepository;
+import repository.PokemonMySQLRepository;
 import ruben.proyecto_pokemon.PokemonApp;
 
 import java.io.File;
@@ -50,6 +51,7 @@ public class Configuration {
 
         switch (repositoryType) {
             case "json" -> repository = new PokemonJsonRepository();
+            case "mysql" -> repository = new PokemonMySQLRepository();
 
             default -> repository = new PokemonMemoryRepository();
         }
